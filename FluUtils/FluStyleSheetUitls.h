@@ -10,6 +10,9 @@
 #include <map>
 #include <QWidget>
 #include <QTimer>
+#include "FluThemeUtils.h"
+
+
 
 class FluStyleSheetUitls : public QObject
 {
@@ -17,6 +20,19 @@ class FluStyleSheetUitls : public QObject
     FluStyleSheetUitls(QObject *object = nullptr);
 
   public:
+    static void setLightStyleSheetPath(const QString &path)
+    {
+        m_lightStyleSheetPath = path;
+    }
+
+    static void setDarkStyleSheetPath(const QString &path)
+    {
+        m_darkStyleSheetPath = path;
+    }
+    static QString getQssByFileName(FluTheme type, QWidget *widget);
+    static void setQssByFileName(FluTheme type, QWidget *widget, bool bDebugQss=false);
+
+
     static QString getQssByFileName(const QString &fileName);
     static void setQssByFileName(const QString &fileName, QWidget *widget, bool bDebugQss = false);
 
@@ -75,4 +91,8 @@ class FluStyleSheetUitls : public QObject
     // #endif
   private:
     static FluStyleSheetUitls *m_styleSheetUtils;
+
+
+    inline static QString m_lightStyleSheetPath;
+    inline static QString m_darkStyleSheetPath;
 };

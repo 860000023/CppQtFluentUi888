@@ -28,17 +28,18 @@ class FluSplitButton : public QWidget
 
         m_hMainLayout->addWidget(m_textBtn);
         m_hMainLayout->addWidget(m_dropDownBtn);
-
+        FluThemeUtils::getUtils()->setTheme(FluTheme::Dark);
         setFixedHeight(30);
 
         connect(m_textBtn, &QPushButton::clicked, [=](bool b) { emit clicked(); });
         connect(m_dropDownBtn, &QPushButton::clicked, [=](bool b) { emit clicked(); });
 
-        FluStyleSheetUitls::setQssByFileName("../StyleSheet/light/FluSplitButton.qss", this);
+        FluStyleSheetUitls::setQssByFileName(FluTheme::Light, this);
+        //FluStyleSheetUitls::setQssByFileName("../StyleSheet/light/FluSplitButton.qss", this);
         m_dropDownBtn->setIcon(FluIconUtils::getFluentIcon(FluAwesomeType::ChevronDown, FluThemeUtils::getUtils()->getTheme()));
         if (FluThemeUtils::getUtils()->getTheme() == FluTheme::Dark)
         {
-            FluStyleSheetUitls::setQssByFileName("../StyleSheet/dark/FluSplitButton.qss", this);
+            FluStyleSheetUitls::setQssByFileName(FluTheme::Dark, this);
         }
 
         connect(FluThemeUtils::getUtils(), &FluThemeUtils::themeChanged, [=](FluTheme theme) { onThemeChanged(); });

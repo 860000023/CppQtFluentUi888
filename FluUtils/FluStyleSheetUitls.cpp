@@ -1,5 +1,5 @@
 #include "FluStyleSheetUitls.h"
-
+#include <typeinfo>
 FluStyleSheetUitls *FluStyleSheetUitls::m_styleSheetUtils = nullptr;
 FluStyleSheetUitls::FluStyleSheetUitls(QObject *object /*= nullptr*/) : QObject(object)
 {
@@ -37,6 +37,52 @@ void FluStyleSheetUitls::setQssByFileName(const QString &fileName, QWidget *widg
         //         widget->setStyleSheet(qss);
         //     });
         // }
+    }
+}
+
+
+
+QString FluStyleSheetUitls::getQssByFileName(FluTheme type, QWidget *widget)
+{
+    QString fileName;
+    // 获取类名
+    QString fullClassName = typeid(*widget).name();
+    QStringList parts = fullClassName.split(" ");
+    QString className = parts.last();
+    switch (type)
+    {       
+        case FluTheme::Light:
+            //../StyleSheet/light/classname.qss
+            fileName = m_lightStyleSheetPath+className+".qss";
+            break;
+        case FluTheme::Dark:
+            fileName = m_darkStyleSheetPath + className + ".qss";
+            break;
+        default:
+            fileName = m_lightStyleSheetPath + className + ".qss";
+            break;
+    }
+    
+    QFile file(fileName);
+    if (file.open(QIODevice::ReadOnly))
+    {
+        QString qssStr = file.readAll();
+        file.close();
+        return qssStr;
+    }
+
+    return "";
+}
+
+void FluStyleSheetUitls::setQssByFileName(FluTheme type, QWidget *widget, bool bDebugQss)
+{
+    
+    QString qss = FluStyleSheetUitls::getQssByFileName(type, widget);
+    if (widget != nullptr)
+    {
+        widget->setStyleSheet(qss);
+
+
     }
 }
 

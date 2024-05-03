@@ -46,6 +46,10 @@ int main(int argc, char **argv)
 {
     QApplication app(argc, argv);
 
+
+    FluStyleSheetUitls::setLightStyleSheetPath("../StyleSheet/light/");
+    FluStyleSheetUitls::setDarkStyleSheetPath("../StyleSheet/dark/");
+
     // FluChangeBackgroundWidget demo;
     // demo.show();
 
@@ -171,7 +175,7 @@ int main(int argc, char **argv)
 
     // FluFlyoutDemo demo;
     // demo.show();
-
+    
     FluSplitButtonDemo demo;
     demo.show();
 
